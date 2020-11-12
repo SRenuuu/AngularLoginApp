@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
-import {UserSignUpService} from "./service/user-sign-up.service";
+import {LoginService} from "./service/login.service";
 import UserDTO from "./dto/UserDTO";
 
 
@@ -23,7 +23,7 @@ export class AppComponent {
   signUpPassword = '';
 
   constructor(
-    private userSignUpService: UserSignUpService,
+    private userLoginService: LoginService,
     private toastrService: ToastrService) {
 
   }
@@ -52,9 +52,57 @@ export class AppComponent {
       this.signUpEmail.trim(),
       this.signUpPassword.trim()
     );
-    this.userSignUpService.registerUser(user).subscribe(response => {
-      console.log(response)
-    });
-    this.onSucess("User registered.")
+    this.userLoginService.signUp(user).subscribe(response => {
+        console.log(response)
+        if (response.isSignedUp === true) {
+          this.onSucess("User signed-up");
+          this.signUpName = '';
+          this.signUpDOB = '';
+          this.signUpEmail = '';
+          this.signUpPassword = '';
+        }
+      },
+      errorObject => {
+        this.onWarning("Email already exists");
+
+      }
+    );
+  }
+
+  signIn() {
+    if (this.validateEmail(this.signInEmail)) {
+      this.signInEmailErrorState = false;
+
+    } else {
+      this.signInEmailErrorState = true;
+    }
+
+    if (this.validatePassword(this.signInPassword)) {
+      this.signInPasswordErrorState = false;
+
+    } else {
+      this.signInPasswordErrorState = true;
+    }
+    if (this.signInEmailErrorState === false && this.signInPasswordErrorState === false) {
+      this.userLoginService.signIn(this.signInEmail, this.signInPassword).subscribe(result => {
+        console.log(result);
+        this.onSucess("User Signed-in");
+        this.signInEmail = '';
+        this.signInPassword = ''
+      }, errorObject => {
+        this.onWarning("User Password is incorrect");
+        this.signInPassword = ''
+      });
+    }
+  }
+
+  validateEmail(elementValue) {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(elementValue);
+  }
+
+  validatePassword(elementValue) {
+    const passwordPattern = /^[a-zA-Z0-9._-]+$/;
+    return passwordPattern.test(elementValue);
   }
 }

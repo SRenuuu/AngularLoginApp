@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -17,17 +18,18 @@
           <form>
             <div class="form-group">
               <label for="SignInEmail">Email</label>
-              <input [(ngModel)]="signInEmail" class="form-control" id="SignInEmail" placeholder="abc@example.com"
+              <input [(ngModel)]="signInEmail" class="form-control" id="signInEmail" name="signInEmail" placeholder=""
                      type="email">
               <p *ngIf="signInEmailErrorState" class="alert-primary text-sm-center text-primary p-1 small">
-                User Email is required !
+                Invalid User Email !
               </p>
             </div>
             <div class="form-group">
               <label for="SignInPassword">Password</label>
-              <input class="form-control" id="SignInPassword" placeholder="*****" type="password">
+              <input [(ngModel)]="signInPassword" class="form-control" id="signInPassword" name="signInPassword"
+                     placeholder="" type="password">
               <p *ngIf="signInPasswordErrorState" class="alert-primary text-sm-center text-primary p-1 small">
-                User Password is required !
+                Invalid User Password !
               </p>
             </div>
 
@@ -37,8 +39,7 @@
             <!--                Remember Me-->
             <!--              </label>-->
             <!--            </div>-->
-            <button (click)="loadingState=false;signInEmailErrorState=true;signInPasswordErrorState=true;"
-                    class="btn btn-primary" type="button">Sign-in
+            <button (click)="signIn()" class="btn btn-primary" type="button">Sign-in
             </button>
           </form>
         </div>
@@ -51,26 +52,30 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label" for="SignUpName">Full Name</label>
               <div class="col-sm-9">
-                <input class="form-control" id="SignUpName" placeholder="John Doe" type="email">
+                <input [(ngModel)]="signUpName" class="form-control" id="signUpName" name="signUpName" placeholder=""
+                       type="email">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-sm-3 col-form-label" for="SignUpDOB">Date of Birth</label>
               <div class="col-sm-9">
-                <input class="form-control" id="SignUpDOB" placeholder="" type="date">
+                <input [(ngModel)]="signUpDOB" class="form-control" id="signUpDOB" name="signUpDOB" placeholder=""
+                       type="date">
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-sm-3 col-form-label" for="SignUpEmail">Email</label>
+              <label class="col-sm-3 col-form-label" for="signUpEmail">Email</label>
               <div class="col-sm-9">
-                <input class="form-control" id="SignUpEmail" placeholder="abc@example.com" type="email">
+                <input [(ngModel)]="signUpEmail" class="form-control" id="signUpEmail" name="signUpEmail" placeholder=""
+                       type="email">
               </div>
             </div>
 
             <div class="form-group row">
               <label class="col-sm-3 col-form-label" for="SignUpPassword">Password</label>
               <div class="col-sm-9">
-                <input class="form-control" id="SignUpPassword" placeholder="********" type="password">
+                <input [(ngModel)]="signUpPassword" class="form-control" id="signUpPassword" name="signUpPassword"
+                       placeholder="" type="password">
               </div>
             </div>
             <div style="align-content: space-around; width:100%;">
